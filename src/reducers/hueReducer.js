@@ -7,7 +7,7 @@ const hueReducer = (state = initialState, action) => {
     case "GET_ROOMS":
       return { ...state, rooms: action.payload.rooms };
     case "SET_ROOM_STATE":
-      return { ...state, rooms: [...rooms] };
+      return { ...state };
     default:
       return { ...state };
   }
