@@ -1,9 +1,9 @@
 import { combineReducers } from "redux";
 
-import hueReducer from "./hueReducer";
+import roomsReducer from "./roomsReducer";
 
 const rootReducer = combineReducers({
-  hue: hueReducer,
+  rooms: roomsReducer,
 });
 
 export default rootReducer;

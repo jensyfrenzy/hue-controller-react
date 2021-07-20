@@ -6,20 +6,20 @@ import Switch from "react-switch";
 
 import { useDispatch } from "react-redux";
 
-import { setRoomState } from "../actions/roomsActions";
+import { setRoomOnState } from "../actions/roomsActions";
 
-const Room = ({ name, state, id }) => {
+const Room = ({ room, id }) => {
   const dispatch = useDispatch();
 
-  const handleStateChange = () => {
-    state.on = !state.on;
-    dispatch(setRoomState(id, { on: state.on }));
+  const handleLightSwitch = () => {
+    room.action.on = !room.action.on;
+    dispatch(setRoomOnState(id, room));
   };
 
   return (
     <StyledRoom>
-      <h2>{name}</h2>
-      <Switch onChange={handleStateChange} checked={state.on} />
+      <h2>{room.name}</h2>
+      <Switch onChange={handleLightSwitch} checked={room.action.on} />
     </StyledRoom>
   );
 };

@@ -1,17 +1,5 @@
 import axios from "axios";
 import { roomsUrl, roomActionUrl } from "../api";
-const getRoomsWithKeys = (data) => {
-  const rooms = [];
-  Object.keys(data).forEach((key) => {
-    let room = data[key];
-    room.key = key;
-
-    if (room.type === "Room") {
-      rooms.push(room);
-    }
-  });
-  return rooms;
-};
 
 // action creator
 export const loadRooms = () => async (dispatch) => {
@@ -20,16 +8,18 @@ export const loadRooms = () => async (dispatch) => {
   dispatch({
     type: "GET_ROOMS",
     payload: {
-      rooms: getRoomsWithKeys(roomsResponse.data),
+      rooms: roomsResponse.data,
     },
   });
 };
 
-export const setRoomState = (key, state) => async (dispatch) => {
-  const setState = await axios.put(roomActionUrl(key), state);
-  //   const roomsResponse = await axios.get(roomsUrl());
-
+export const setRoomOnState = (key, room) => async (dispatch) => {
+  const setState = await axios.put(roomActionUrl(key), { on: room.action.on });
   dispatch({
     type: "SET_ROOM_STATE",
+    payload: {
+      roomId: key,
+      room: room,
+    },
   });
 };

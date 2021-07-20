@@ -11,21 +11,15 @@ const Rooms = () => {
   useEffect(() => {
     dispatch(loadRooms());
   }, [dispatch]);
-
-  const { rooms } = useSelector((state) => state.hue);
+  const rooms = useSelector((state) => state.rooms);
 
   return (
     <StyledRooms>
       <h1>Rooms</h1>
-      {rooms.length ? (
+      {rooms ? (
         <div>
-          {rooms.map((room) => (
-            <Room
-              key={room.key}
-              id={room.key}
-              name={room.name}
-              state={room.action}
-            />
+          {Object.keys(rooms).map((roomId) => (
+            <Room key={roomId} id={roomId} room={rooms[roomId]} />
           ))}
         </div>
       ) : (
