@@ -40,3 +40,21 @@ export const setRoomBrightnessState =
       },
     });
   };
+
+export const setRoomColorState = (key, room, commit) => async (dispatch) => {
+  if (commit) {
+    const setState = await axios.put(roomActionUrl(key), {
+      xy: room.action.xy,
+    });
+
+    console.log(setState);
+  }
+
+  dispatch({
+    type: "SET_ROOM_STATE",
+    payload: {
+      roomId: key,
+      room: room,
+    },
+  });
+};

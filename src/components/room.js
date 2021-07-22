@@ -1,18 +1,30 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 import styled from "styled-components";
 import { motion } from "framer-motion";
 import { Switch, Slider } from "@material-ui/core";
+import { ColorPicker, createColor } from "material-ui-color";
 
 import { useDispatch } from "react-redux";
 
 import {
   setRoomOnState,
   setRoomBrightnessState,
+  setRoomColorState,
 } from "../actions/roomsActions";
+
+import { RGBtoXY, xyBriToRgb } from "../util";
 
 const Room = ({ room, id }) => {
   const dispatch = useDispatch();
+
+  const initRgb = xyBriToRgb(
+    room.action.xy[0],
+    room.action.xy[1],
+    room.action.bri
+  );
+
+  const [color, setColor] = useState(createColor(initRgb, "rgb"));
 
   const handleLightSwitch = () => {
     room.action.on = !room.action.on;
@@ -29,6 +41,12 @@ const Room = ({ room, id }) => {
     dispatch(setRoomBrightnessState(id, room));
   };
 
+  const handleColorChange = (value) => {
+    setColor(value);
+    room.action.xy = RGBtoXY(value.rgb[0], value.rgb[1], value.rgb[2]);
+    dispatch(setRoomColorState(id, room, true));
+  };
+
   return (
     <StyledRoom>
       <h2>{room.name}</h2>
@@ -39,7 +57,8 @@ const Room = ({ room, id }) => {
         value={room.action.bri}
         onChangeCommitted={commitBrightnessChange}
         onChange={handleBrightnessChange}
-      ></Slider>
+      />
+      <ColorPicker value={color} onChange={handleColorChange} />
     </StyledRoom>
   );
 };
