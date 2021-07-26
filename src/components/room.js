@@ -63,6 +63,14 @@ const Room = ({ room, id }) => {
   );
 };
 
-const StyledRoom = styled(motion.div)``;
+const StyledRoom = styled(motion.div)`
+  padding: 1rem 5rem;
+  min-height: 25vh;
+  box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  border-radius: 1rem;
+  cursor: pointer;
+  overflow: hidden;
+`;
 
 export default Room;
